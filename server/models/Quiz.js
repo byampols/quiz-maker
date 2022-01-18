@@ -1,11 +1,12 @@
 const { Schema, model } = require('mongoose');
 const upvoteSchema = require('./Upvote');
 const questionSchema = require('./Question');
+const scoreSchema = require('./Score');
 const dateFormat = require('../utils/dateFormat');
 
 const thoughtSchema = new Schema(
   {
-    thoughtText: {
+    description: {
       type: String,
       required: 'You need to leave a thought!',
       minlength: 1,
@@ -20,8 +21,9 @@ const thoughtSchema = new Schema(
       type: String,
       required: true
     },
-    question: [questionSchema],
-    upvote: [upvoteSchema]
+    questions: [questionSchema],
+    upvote: [upvoteSchema],
+    scores: [scoreSchema]
   },
   {
     toJSON: {

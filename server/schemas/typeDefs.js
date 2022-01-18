@@ -7,41 +7,57 @@ const typeDefs = gql`
         _id: ID
         username: String
         email: String
-        friendCount: Int
-        thoughts: [Thought]
-        friends: [User]
+        quizzes: [Quiz]
+        scores: [Score]
     }
     type Auth {
         token: ID!
         user: User
     }
-    type Thought {
+    type Quiz {
         _id: ID
-        thoughtText: String
+        description: String
         createdAt: String
         username: String
-        reactionCount: Int
-        reactions: [Reaction]
+        questions: [Question]
+        upvote: [Upvote]
+        scores: [Score]
     }
-    type Reaction {
+    type Score {
         _id: ID
-        reactionBody: String
-        createdAt: String
         username: String
+        quizId: String
+        score: Number
+        createdAt: String
+    }
+    type Question {
+        _id: ID
+        questionText: String
+        options: [Option]
+    }
+    type Option {
+        questionId: String
+        optionText: String
+        isCorrect: Boolean
+    }
+    type Upvote {
+        username: String
+        createdAt: String
     }
     type Query {
         me: User
         users: [User]
         user(username: String!): User
-        thoughts(username: String): [Thought]
-        thought(_id: ID!): Thought
+        quizzes(username: String): [Quiz]
+        quiz(_id: ID!): Quiz
     }
     type Mutation {
         login(email: String!, password: String!): Auth
         addUser(username: String!, email: String!, password: String!): Auth
-        addThought(thoughtText: String!): Thought
-        addReaction(thoughtId: ID!, reactionBody: String!): Thought
-        addFriend(friendId: ID!): User
+        addQuiz(description: String!, questions: [Question]): Quiz
+        addQuestion(quizId: ID!, questionText: String!, options[Option]): Question
+        addOption(questionID: ID!, optionText: String!, isCorrect: Boolean!): Question
+        addUpvote(quizId: ID!): Quiz
     }
 `;
 

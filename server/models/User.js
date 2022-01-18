@@ -20,15 +20,17 @@ const userSchema = new Schema(
       required: true,
       minlength: 5
     },
-    questions: [
+    quizzes: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Question'
+        ref: 'Quiz'
       }
-    ]
+    ],
+    scores: [scoresSchema]
   },
   {
     toJSON: {
+      getters: true,
       virtuals: true
     }
   }

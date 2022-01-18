@@ -1,4 +1,4 @@
-const { User, Thought } = require("../models");
+const { User, Quiz, Question } = require("../models");
 const { AuthenticationError } = require('apollo-server-express');
 const { signToken } = require('../utils/auth');
 
@@ -13,17 +13,17 @@ const resolvers = {
             throw new AuthenticationError('Not logged in');
         },
         users: async () => {
-            return User.find().select('-__v -password').populate('friends').populate('thoughts');
+            return User.find().select('-__v -password').populate('scores').populate('quizzes');
         },
         user: async (parent, {username}) => {
-            return User.findOne({username}).select('-__v -password').populate('friends').populate('thoughts');
+            return User.findOne({username}).select('-__v -password').populate('scores').populate('quizzes');
         },
-        thoughts: async (parent, {username}) => {
+        quizzes: async (parent, {username}) => {
             const params = username ? {username} : {};
-            return Thought.find(params).sort({ createdAt: -1 });
+            return Quiz.find(params).sort({ createdAt: -1 }).populate('questions').populate('questions.options').populate('upvote').populate('scores');
         },
-        thought: async (parent, {_id}) => {
-            return Thought.findOne({_id});
+        quiz: async (parent, {_id}) => {
+            return Quiz.findOne({_id}).populate('questions').populate('questions.options').populate('upvote').populate('scores');
         }
     },
     Mutation: {
@@ -48,43 +48,58 @@ const resolvers = {
             const token = signToken(user);
             return {token, user};
         },
-        addThought: async (parent, args, context) => {
+        addQuiz: async (parent, args, context) => {
             if (context.user) {
-                const thought = await Thought.create({ ...args, username: context.user.username });
+                const quiz = await Quiz.create({ ...args, username: context.user.username });
 
                 await User.findByIdAndUpdate(
                     {_id: context.user._id},
-                    {$push: {thoughts: thought._id}},
+                    {$push: {quizzes: quiz._id}},
                     {new: true}
                 );
 
-                return thought;
+                return quiz;
             }
 
             throw new AuthenticationError('You need to be logged in!');
         },
-        addReaction: async (parent, {thoughtId, reactionBody}, context) => {
+        addQuestion: async (parent, args, context) => {
             if (context.user) {
-                const updatedThought = await Thought.findOneAndUpdate(
-                    { _id: thoughtId },
-                    { $push: { reactions: { reactionBody, username: context.user.username } } },
+                const question = await Question.create({ ...args });
+
+                await Quiz.findByIdAndUpdate(
+                    {_id: context.user._id},
+                    {$push: {questions: question._id}},
+                    {new: true}
+                );
+
+                return question;
+            }
+
+            throw new AuthenticationError('You need to be logged in!');
+        },
+        addOption: async (parent, {questionId, optionText, isCorrect}, context) => {
+            if (context.user) {
+                const updatedQuestion = await Question.findOneAndUpdate(
+                    { _id: questionId },
+                    { $push: { options: { questionId, optionText, isCorrect } } },
                     { new: true, runValidators: true }
                   );
 
-                return updatedThought;
+                return updatedQuestion;
             }
 
             throw new AuthenticationError('You need to be logged in!');
         },
-        addFriend: async (parent, {friendId}, context) => {
+        addUpvote: async (parent, {quizId}, context) => {
             if (context.user) {
-                const updatedUser = await User.findOneAndUpdate(
-                    { _id: context.user._id },
-                    { $addToSet: { friends: friendId } },
-                    { new: true }
-                  ).populate('friends');
+                const updatedQuiz = await Quiz.findOneAndUpdate(
+                    { _id: quizId },
+                    { $push: { upvote: { username: context.user.username } } },
+                    { new: true, runValidators: true }
+                  );
 
-                  return updatedUser;
+                return updatedQuiz;
             }
 
             throw new AuthenticationError('You need to be logged in!');
