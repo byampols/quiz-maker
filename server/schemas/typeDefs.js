@@ -22,12 +22,14 @@ const typeDefs = gql`
         questions: [Question]
         upvote: [Upvote]
         scores: [Score]
+        upvoteCount: Int
+        questionCount: Int
     }
     type Score {
         _id: ID
         username: String
         quizId: String
-        score: Number
+        score: Float
         createdAt: String
     }
     type Question {
@@ -54,8 +56,8 @@ const typeDefs = gql`
     type Mutation {
         login(email: String!, password: String!): Auth
         addUser(username: String!, email: String!, password: String!): Auth
-        addQuiz(description: String!, questions: [Question]): Quiz
-        addQuestion(quizId: ID!, questionText: String!, options[Option]): Question
+        addQuiz(description: String!): Quiz
+        addQuestion(quizId: ID!, questionText: String!): Question
         addOption(questionID: ID!, optionText: String!, isCorrect: Boolean!): Question
         addUpvote(quizId: ID!): Quiz
     }
