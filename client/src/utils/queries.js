@@ -1,36 +1,46 @@
 import { gql } from '@apollo/client';
 
-export const QUERY_THOUGHTS = gql`
-query thoughts($username: String) {
-    thoughts(username: $username) {
+export const QUERY_QUIZZES = gql`
+query quizzes($username: String) {
+    quizzes(username: $username) {
       _id
-      thoughtText
+      description
       createdAt
       username
-      reactionCount
-      reactions {
-        _id
-        createdAt
+      upvoteCount
+      questionCount
+      scores {
         username
-        reactionBody
+        score
+        createdAt
       }
     }
   }
 `;
 
-export const QUERY_THOUGHT = gql`
-  query thought($id: ID!) {
-    thought(_id: $id) {
+export const QUERY_QUIZ = gql`
+  query quiz($id: ID!) {
+    quiz(_id: $id) {
       _id
-      thoughtText
+      description
       createdAt
       username
-      reactionCount
-      reactions {
-        _id
-        createdAt
+      upvoteCount
+      questionCount
+      scores {
         username
-        reactionBody
+        score
+        createdAt
+      }
+      upvote {
+        username
+      }
+      questions {
+        questionText
+        options {
+          optionText
+          isCorrect
+        }
       }
     }
   }
@@ -42,16 +52,23 @@ export const QUERY_USER = gql`
       _id
       username
       email
-      friendCount
-      friends {
+      quizzes(username: $username) {
         _id
-        username
-      }
-      thoughts {
-        _id
-        thoughtText
+        description
         createdAt
-        reactionCount
+        username
+        upvoteCount
+        questionCount
+        scores {
+          username
+          score
+          createdAt
+        }
+      }
+      scores {
+        quizId
+        score
+        createdAt
       }
     }
   }
@@ -63,22 +80,23 @@ export const QUERY_ME = gql`
       _id
       username
       email
-      friendCount
-      thoughts {
+      quizzes(username: $username) {
         _id
-        thoughtText
+        description
         createdAt
-        reactionCount
-        reactions {
-          _id
-          createdAt
-          reactionBody
+        username
+        upvoteCount
+        questionCount
+        scores {
           username
+          score
+          createdAt
         }
       }
-      friends {
-        _id
-        username
+      scores {
+        quizId
+        score
+        createdAt
       }
     }
   }
@@ -90,11 +108,6 @@ export const QUERY_ME_BASIC = gql`
       _id
       username
       email
-      friendCount
-      friends {
-        _id
-        username
-      }
     }
   }
 `;

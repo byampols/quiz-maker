@@ -24,45 +24,83 @@ export const ADD_USER = gql`
   }
 `;
 
-export const ADD_FRIEND = gql`
-  mutation addFriend($id: ID!) {
-    addFriend(friendId: $id) {
+export const ADD_QUIZ = gql`
+  mutation addQuiz($description: String!) {
+    addQuiz(description: $description) {
       _id
-      username
-      friendCount
-      friends {
-        _id
-        username
-      }
-    }
-  }
-`;
-
-export const ADD_THOUGHT = gql`
-  mutation addThought($thoughtText: String!) {
-    addThought(thoughtText: $thoughtText) {
-      _id
-      thoughtText
+      description
       createdAt
       username
-      reactionCount
-      reactions {
-        _id
+      upvoteCount
+      questionCount
+      scores {
+        username
+        score
+        createdAt
+      }
+      upvote {
+        username
+      }
+      questions {
+        questionText
+        options {
+          optionText
+          isCorrect
+        }
       }
     }
   }
 `;
 
-export const ADD_REACTION = gql`
-  mutation addReaction($thoughtId: ID!, $reactionBody: String!) {
-    addReaction(thoughtId: $thoughtId, reactionBody: $reactionBody) {
+export const ADD_UPVOTE = gql`
+  mutation addUpvote($quizId: ID!) {
+    addUpvote(quizId: $quizId) {
       _id
-      reactionCount
-      reactions {
-        _id
-        reactionBody
-        createdAt
+      description
+      createdAt
+      username
+      upvoteCount
+      questionCount
+      scores {
         username
+        score
+        createdAt
+      }
+      upvote {
+        username
+      }
+      questions {
+        questionText
+        options {
+          optionText
+          isCorrect
+        }
+      }
+    }
+  }
+`;
+
+export const ADD_QUESTION = gql`
+  mutation addQuestion($quizId: ID!, $questionText: String!) {
+    addQuestion(quizId: $quizId, questionText: $questionText) {
+      _id
+      questionText
+      options {
+        optionText
+        isCorrect
+      }
+    }
+  }
+`;
+
+export const ADD_OPTION = gql`
+  mutation addOption($questionId: ID!, $optionText: String!, $isCorrect: Boolean!) {
+    addOption(quizId: $questionId, optionText: $optionText, isCorrect: $isCorrect) {
+      _id
+      questionText
+      options {
+        optionText
+        isCorrect
       }
     }
   }
