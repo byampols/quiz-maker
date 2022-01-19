@@ -34,7 +34,9 @@ const quizSchema = new Schema(
 );
 
 quizSchema.virtual('upvoteCount').get(function() {
-  return this.upvotes.length;
+  return this.upvote.length;
+
+
 });
 
 

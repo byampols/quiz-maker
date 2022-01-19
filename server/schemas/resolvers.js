@@ -6,17 +6,17 @@ const resolvers = {
     Query: {
         me: async(parent, args, context) => {
             if (context.user) {
-                const userData = await User.findOne({_id: context.user._id}).select('-__v -password').populate('scores').populate('quizzes');
+                const userData = await User.findOne({_id: context.user._id}).select('-__v -password').populate('scores').populate('quizzes').populate('quizzes.scores');
                 return userData
             }
             
             throw new AuthenticationError('Not logged in');
         },
         users: async () => {
-            return User.find().select('-__v -password').populate('scores').populate('quizzes');
+            return User.find().select('-__v -password').populate('scores').populate('quizzes').populate('quizzes.scores');
         },
         user: async (parent, {username}) => {
-            return User.findOne({username}).select('-__v -password').populate('scores').populate('quizzes');
+            return User.findOne({username}).select('-__v -password').populate('scores').populate('quizzes').populate('quizzes.scores');
         },
         quizzes: async (parent, {username}) => {
             const params = username ? {username} : {};

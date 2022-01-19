@@ -735,6 +735,10 @@ nav a:hover {
   text-transform: uppercase;
 }
 
+.text-bold {
+  font-weight: bold;
+}
+
 .text-center {
   text-align: center;
 }
