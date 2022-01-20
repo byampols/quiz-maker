@@ -52,7 +52,7 @@ const SingleQuiz = props => {
 
       setQuestions(list);
     }
-  }, [quiz, userData]);
+  }, [quiz, quizId, userData]);
 
   if (loading) {
     return <div>Loading...</div>

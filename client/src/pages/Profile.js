@@ -4,7 +4,7 @@ import { Redirect, useParams } from 'react-router-dom';
 import QuizList from '../components/QuizList';
 //import ThoughtForm from '../components/ThoughtForm';
 
-import { useQuery, useMutation } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
 
 import Auth from '../utils/auth';

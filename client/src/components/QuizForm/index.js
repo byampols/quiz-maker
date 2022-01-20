@@ -125,7 +125,7 @@ const QuizForm = () => {
         <div>
             <form className="flex-row justify-center justify-space-between-md align-stretch" onSubmit={handleFormSubmit}>
                 <div>
-                {error || errorMessage && <span className="col-12 col-md-9 ml-0 text-bold text-error">{errorMessage ? errorMessage : 'Something went wrong...'}</span>}
+                {(error || errorMessage) && <span className="col-12 col-md-9 ml-0 text-bold text-error">{errorMessage ? errorMessage : 'Something went wrong...'}</span>}
                 <div className='col-12 col-md-9'>
                     <p className={`m-0 ${descriptionCount === 280 || error || errorMessage ? 'text-error' : ''}`} >
                         Quiz Description: {descriptionCount}/280

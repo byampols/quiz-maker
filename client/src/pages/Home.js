@@ -16,7 +16,7 @@ const Home = () => {
     return score.quizId;
   })
 
-  const loggedIn = Auth.loggedIn();
+  // const loggedIn = Auth.loggedIn();
 
   return (
     <main>
