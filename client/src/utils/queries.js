@@ -108,6 +108,11 @@ export const QUERY_ME_BASIC = gql`
       _id
       username
       email
+      scores {
+        quizId
+        score
+        createdAt
+      }
     }
   }
 `;

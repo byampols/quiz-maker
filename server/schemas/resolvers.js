@@ -63,30 +63,21 @@ const resolvers = {
 
             throw new AuthenticationError('You need to be logged in!');
         },
-        addQuestion: async (parent, args, context) => {
+        updateUserScores: async (parent, {score}, context) => {
             if (context.user) {
-                const question = await Question.create({ ...args });
-
-                await Quiz.findByIdAndUpdate(
+                const updatedUser = await User.findByIdAndUpdate(
                     {_id: context.user._id},
-                    {$push: {questions: question._id}},
+                    {$push: {scores: {...score, username: context.user.username}}},
                     {new: true}
                 );
 
-                return question;
-            }
+                await Quiz.findByIdAndUpdate(
+                    {_id: score.quizId},
+                    {$push: {scores: {...score, username: context.user.username}}},
+                    {new: true}
+                );
 
-            throw new AuthenticationError('You need to be logged in!');
-        },
-        addOption: async (parent, {questionId, optionText, isCorrect}, context) => {
-            if (context.user) {
-                const updatedQuestion = await Question.findOneAndUpdate(
-                    { _id: questionId },
-                    { $push: { options: { questionId, optionText, isCorrect } } },
-                    { new: true, runValidators: true }
-                  );
-
-                return updatedQuestion;
+                return updatedUser;
             }
 
             throw new AuthenticationError('You need to be logged in!');

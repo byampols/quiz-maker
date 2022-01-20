@@ -12,7 +12,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import NoMatch from './pages/NoMatch';
 import CreateQuiz from './pages/CreateQuiz';
-// import SingleThought from './pages/SingleThought';
+import SingleQuiz from './pages/SingleQuiz';
 import Profile from './pages/Profile';
 
 
@@ -48,9 +48,8 @@ function App() {
               <Route exact path="/login" component={Login} />
               <Route exact path="/signup" component={Signup} />
               <Route exact path="/profile/:username?" component={Profile} />
-              <Route exact path="/CreateQuiz/:quizId?" component={CreateQuiz} />
-              {/* <Route exact path="/thought/:id" component={SingleThought} /> */}
-
+              <Route exact path="/create-quiz/" component={CreateQuiz} />
+              <Route exact path="/quiz/:id" component={SingleQuiz} />
               <Route component={NoMatch} />
             </Switch>
           </div>

@@ -15,7 +15,7 @@ const QuizList = ({quizzes, title}) => {
                         <Link to={`/profile/${quiz.username}`} style={{fontWeight: 700}} className='text-light'>
                             {quiz.username}
                         </Link>
-                        {' '}quiz on {quiz.createdAt}
+                        {' '}created this quiz on {quiz.createdAt}
                     </p>
                     <div className='card-body'>
                         <Link to={`/quiz/${quiz._id}`}>

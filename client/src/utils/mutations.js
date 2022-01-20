@@ -24,9 +24,23 @@ export const ADD_USER = gql`
   }
 `;
 
+export const UPDATE_USER_SCORES = gql`
+  mutation updateUserScores($score: ScoreInput!) {
+    updateUserScores(score: $score) {
+      _id
+      username
+      scores {
+        quizId
+        score
+        createdAt
+      }
+    }
+  }
+`;
+
 export const ADD_QUIZ = gql`
-  mutation addQuiz($description: String!) {
-    addQuiz(description: $description) {
+  mutation addQuiz($description: String!, $questions: [QuestionInput]) {
+    addQuiz(description: $description, questions: $questions) {
       _id
       description
       createdAt
@@ -75,32 +89,6 @@ export const ADD_UPVOTE = gql`
           optionText
           isCorrect
         }
-      }
-    }
-  }
-`;
-
-export const ADD_QUESTION = gql`
-  mutation addQuestion($quizId: ID!, $questionText: String!) {
-    addQuestion(quizId: $quizId, questionText: $questionText) {
-      _id
-      questionText
-      options {
-        optionText
-        isCorrect
-      }
-    }
-  }
-`;
-
-export const ADD_OPTION = gql`
-  mutation addOption($questionId: ID!, $optionText: String!, $isCorrect: Boolean!) {
-    addOption(quizId: $questionId, optionText: $optionText, isCorrect: $isCorrect) {
-      _id
-      questionText
-      options {
-        optionText
-        isCorrect
       }
     }
   }

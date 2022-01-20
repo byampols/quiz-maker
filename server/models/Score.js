@@ -12,7 +12,7 @@ const scoreSchema = new Schema(
       required: true
     },
     score: {
-      type: Number,
+      type: String,
       required: true
     },
     createdAt: {

@@ -18,8 +18,6 @@ const Profile = () => {
 
   const user = data?.me || data?.user || {};
 
-  console.log(data);
-
   // redirect to personal profile page if username is the logged-in user's
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
     return <Redirect to="/profile" />;
@@ -44,7 +42,7 @@ const Profile = () => {
           Viewing {userParam ? `${user.username}'s` : 'your'} profile.
         </h2>
 
-        <button className="btn ml-auto" onClick={() => window.location.assign('/CreateQuiz')}>
+        <button className="btn ml-auto" onClick={() => window.location.assign('/create-quiz')}>
           Create New Quiz
         </button>
       </div>

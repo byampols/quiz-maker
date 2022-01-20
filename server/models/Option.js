@@ -2,9 +2,6 @@ const { Schema } = require('mongoose');
 
 const optionSchema = new Schema(
   {
-    questionId: {
-      type: String
-    },
     optionText: {
       type: String,
       required: 'You need to create an option!',

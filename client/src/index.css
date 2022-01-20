@@ -153,6 +153,14 @@ nav a:hover {
   font-size: 1.4rem;
 }
 
+.question-header {
+  font-size: 1.4rem;
+}
+
+.question-body {
+  font-size: 1.1rem;
+}
+
 /* FORM */
 .form-label,
 .form-input,
