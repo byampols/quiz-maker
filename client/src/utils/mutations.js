@@ -24,45 +24,71 @@ export const ADD_USER = gql`
   }
 `;
 
-export const ADD_FRIEND = gql`
-  mutation addFriend($id: ID!) {
-    addFriend(friendId: $id) {
+export const UPDATE_USER_SCORES = gql`
+  mutation updateUserScores($score: ScoreInput!) {
+    updateUserScores(score: $score) {
       _id
       username
-      friendCount
-      friends {
-        _id
-        username
+      scores {
+        quizId
+        score
+        createdAt
       }
     }
   }
 `;
 
-export const ADD_THOUGHT = gql`
-  mutation addThought($thoughtText: String!) {
-    addThought(thoughtText: $thoughtText) {
+export const ADD_QUIZ = gql`
+  mutation addQuiz($description: String!, $questions: [QuestionInput]!) {
+    addQuiz(description: $description, questions: $questions) {
       _id
-      thoughtText
+      description
       createdAt
       username
-      reactionCount
-      reactions {
-        _id
+      upvoteCount
+      questionCount
+      scores {
+        username
+        score
+        createdAt
+      }
+      upvote {
+        username
+      }
+      questions {
+        questionText
+        options {
+          optionText
+          isCorrect
+        }
       }
     }
   }
 `;
 
-export const ADD_REACTION = gql`
-  mutation addReaction($thoughtId: ID!, $reactionBody: String!) {
-    addReaction(thoughtId: $thoughtId, reactionBody: $reactionBody) {
+export const ADD_UPVOTE = gql`
+  mutation addUpvote($quizId: ID!) {
+    addUpvote(quizId: $quizId) {
       _id
-      reactionCount
-      reactions {
-        _id
-        reactionBody
-        createdAt
+      description
+      createdAt
+      username
+      upvoteCount
+      questionCount
+      scores {
         username
+        score
+        createdAt
+      }
+      upvote {
+        username
+      }
+      questions {
+        questionText
+        options {
+          optionText
+          isCorrect
+        }
       }
     }
   }

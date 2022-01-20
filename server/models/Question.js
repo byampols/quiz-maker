@@ -8,7 +8,7 @@ const questionSchema = new Schema(
       required: 'You need to create a question!',
       minlength: 1
     },
-    option: [optionSchema]
+    options: [optionSchema]
   },
   {
     toJSON: {

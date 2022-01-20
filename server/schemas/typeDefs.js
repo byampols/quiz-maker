@@ -7,41 +7,71 @@ const typeDefs = gql`
         _id: ID
         username: String
         email: String
-        friendCount: Int
-        thoughts: [Thought]
-        friends: [User]
+        quizzes: [Quiz]
+        scores: [Score]
     }
     type Auth {
         token: ID!
         user: User
     }
-    type Thought {
+    type Quiz {
         _id: ID
-        thoughtText: String
+        description: String
         createdAt: String
         username: String
-        reactionCount: Int
-        reactions: [Reaction]
+        questions: [Question]
+        upvote: [Upvote]
+        scores: [Score]
+        upvoteCount: Int
+        questionCount: Int
     }
-    type Reaction {
+    type Score {
         _id: ID
-        reactionBody: String
-        createdAt: String
         username: String
+        quizId: String
+        score: String
+        createdAt: String
+    }
+    input ScoreInput {
+        username: String
+        quizId: String
+        score: String
+    }
+    type Question {
+        _id: ID
+        questionText: String
+        options: [Option]
+    }
+    type Option {
+        optionText: String
+        isCorrect: Boolean
+    }
+    input QuestionInput {
+        _id: ID
+        questionText: String
+        options: [OptionInput]
+    }
+    input OptionInput {
+        optionText: String
+        isCorrect: Boolean
+    }
+    type Upvote {
+        username: String
+        createdAt: String
     }
     type Query {
         me: User
         users: [User]
         user(username: String!): User
-        thoughts(username: String): [Thought]
-        thought(_id: ID!): Thought
+        quizzes(username: String): [Quiz]
+        quiz(_id: ID!): Quiz
     }
     type Mutation {
         login(email: String!, password: String!): Auth
         addUser(username: String!, email: String!, password: String!): Auth
-        addThought(thoughtText: String!): Thought
-        addReaction(thoughtId: ID!, reactionBody: String!): Thought
-        addFriend(friendId: ID!): User
+        addQuiz(description: String!, questions: [QuestionInput]!): Quiz
+        updateUserScores(score: ScoreInput!): User
+        addUpvote(quizId: ID!): Quiz
     }
 `;
 

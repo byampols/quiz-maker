@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
+const scoreSchema = require('./Score');
 
 const userSchema = new Schema(
   {
@@ -20,15 +21,17 @@ const userSchema = new Schema(
       required: true,
       minlength: 5
     },
-    questions: [
+    quizzes: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Question'
+        ref: 'Quiz'
       }
-    ]
+    ],
+    scores: [scoreSchema]
   },
   {
     toJSON: {
+      getters: true,
       virtuals: true
     }
   }

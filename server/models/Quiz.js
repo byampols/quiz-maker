@@ -1,11 +1,12 @@
 const { Schema, model } = require('mongoose');
 const upvoteSchema = require('./Upvote');
 const questionSchema = require('./Question');
+const scoreSchema = require('./Score');
 const dateFormat = require('../utils/dateFormat');
 
-const thoughtSchema = new Schema(
+const quizSchema = new Schema(
   {
-    thoughtText: {
+    description: {
       type: String,
       required: 'You need to leave a thought!',
       minlength: 1,
@@ -20,20 +21,29 @@ const thoughtSchema = new Schema(
       type: String,
       required: true
     },
-    question: [questionSchema],
-    upvote: [upvoteSchema]
+    questions: [questionSchema],
+    upvote: [upvoteSchema],
+    scores: [scoreSchema]
   },
   {
     toJSON: {
-      getters: true
+      getters: true,
+      virtuals: true
     }
   }
 );
 
-thoughtSchema.virtual('upvoteCount').get(function() {
-  return this.upvotes.length;
+quizSchema.virtual('upvoteCount').get(function() {
+  return this.upvote.length;
+
+
 });
 
-const Thought = model('Thought', thoughtSchema);
 
-module.exports = Thought;
+quizSchema.virtual('questionCount').get(function() {
+  return this.questions.length;
+});
+
+const Quiz = model('Quiz', quizSchema);
+
+module.exports = Quiz;

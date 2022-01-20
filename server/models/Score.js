@@ -1,11 +1,19 @@
 const { Schema } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
-const upvoteSchema = new Schema(
+const scoreSchema = new Schema(
   {
     username: {
       type: String,
-      required: true,
+      required: true
+    },
+    quizId: {
+      type: String,
+      required: true
+    },
+    score: {
+      type: String,
+      required: true
     },
     createdAt: {
       type: Date,
@@ -15,9 +23,9 @@ const upvoteSchema = new Schema(
   },
   {
     toJSON: {
-      getters: true
+      virtuals: true
     }
   }
 );
 
-module.exports = upvoteSchema;
+module.exports = scoreSchema;
