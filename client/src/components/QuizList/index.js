@@ -23,8 +23,8 @@ const QuizList = ({quizzes, title, userQuizzes}) => {
                         <Link to={`/quiz/${quiz._id}`}>{' '}created this quiz on {quiz.createdAt}</Link>
                     </p>
                     <div className={`card-body ${userQuizzes ? (
-                        userQuizzes.includes(quiz._id) ? 'card-body-highlight' : ''
-                    ) : ''}`}>
+                        userQuizzes.includes(quiz._id) ? 'card-body-highlight' : 'text-dark'
+                    ) : 'text-dark'}`}>
                         <Link to={`/quiz/${quiz._id}`}>
                             <p>{quiz.description}</p>
                             <p className='mb-0'>

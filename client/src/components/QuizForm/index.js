@@ -123,70 +123,72 @@ const QuizForm = () => {
 
     return (
         <div>
-        <form className="flex-row justify-center justify-space-between-md align-stretch" onSubmit={handleFormSubmit}>
-            {error || errorMessage && <span className="col-12 col-md-9 ml-0 text-bold text-error">{errorMessage ? errorMessage : 'Something went wrong...'}</span>}
-            <div className='col-12 col-md-9'>
-                <p className={`m-0 ${descriptionCount === 280 || error || errorMessage ? 'text-error' : ''}`} >
-                    Quiz Description: {descriptionCount}/280
-                </p>
-                <textarea
-                    placeholder="What is this quiz about?"
-                    value={description}
-                    className="form-input"
-                    onChange={handleDescriptionChange}
-                ></textarea>
-            </div>
-            {questionList.map((question, i) => {
-                return (
-                    <div className='col-12 col-md-9' key={i}>
-                        <p className={`m-0 ${question.count === 280 || error || errorMessage ? 'text-error' : ''}`} >
-                            Question {i + 1}: {question.count}/280
-                        </p>
-                        <textarea
-                            placeholder="Here's a question..."
-                            value={question.questionText}
-                            name="questionText"
-                            className="form-input"
-                            onChange={e => handleQuestionChange(e, i, undefined, "text")}
-                        ></textarea>
-                        <div className='flex-row justify-center justify-space-between-md align-stretch'>
-                            {question.options.map((option, j) => {
+            <form className="flex-row justify-center justify-space-between-md align-stretch" onSubmit={handleFormSubmit}>
+                <div>
+                {error || errorMessage && <span className="col-12 col-md-9 ml-0 text-bold text-error">{errorMessage ? errorMessage : 'Something went wrong...'}</span>}
+                <div className='col-12 col-md-9'>
+                    <p className={`m-0 ${descriptionCount === 280 || error || errorMessage ? 'text-error' : ''}`} >
+                        Quiz Description: {descriptionCount}/280
+                    </p>
+                    <textarea
+                        placeholder="What is this quiz about?"
+                        value={description}
+                        className="form-input"
+                        onChange={handleDescriptionChange}
+                    ></textarea>
+                </div>
+                {questionList.map((question, i) => {
+                    return (
+                        <div className='col-12 col-md-9' key={i}>
+                            <p className={`m-0 ${question.count === 280 || error || errorMessage ? 'text-error' : ''}`} >
+                                Question {i + 1}: {question.count}/280
+                            </p>
+                            <textarea
+                                placeholder="Here's a question..."
+                                value={question.questionText}
+                                name="questionText"
+                                className="form-input"
+                                onChange={e => handleQuestionChange(e, i, undefined, "text")}
+                            ></textarea>
+                            <div className='flex-row justify-space-between align-stretch'>
+                                {question.options.map((option, j) => {
 
-                                return (
-                                    <div className='col-2 col-md-2' key={j}>
-                                        <div>
-                                            <p className={`m-0 ${option.count === 280 || error || errorMessage ? 'text-error' : ''}`} >
-                                                Option {j + 1}: {option.count}/280
-                                            </p>
+                                    return (
+                                        <div className='col-12 col-md-2 mb-4 mb-auto-md' key={j}>
                                             <div>
-                                                <textarea
-                                                    value={option.optionText}
-                                                    className="form-input"
-                                                    onChange={e => handleQuestionChange(e, i, j, "text")}
-                                                    name="optionText"
-                                                ></textarea>
-                                                <label htmlFor={`${j}.isCorrect`}>Correct </label>
-                                                <input type="checkbox" id={`${j}.isCorrect`} name={`isCorrect`} checked={option.isCorrect} onChange={e => handleQuestionChange(e, i, j, 'checkbox')} />
+                                                <p className={`m-0 ${option.count === 280 || error || errorMessage ? 'text-error' : ''}`} >
+                                                    Option {j + 1}: {option.count}/280
+                                                </p>
+                                                <div>
+                                                    <textarea
+                                                        value={option.optionText}
+                                                        className="form-input"
+                                                        onChange={e => handleQuestionChange(e, i, j, "text")}
+                                                        name="optionText"
+                                                    ></textarea>
+                                                    <label htmlFor={`${j}.isCorrect`}>Correct </label>
+                                                    <input className='checkbox' type="checkbox" id={`${j}.isCorrect`} name={`isCorrect`} checked={option.isCorrect} onChange={e => handleQuestionChange(e, i, j, 'checkbox')} />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                )
-                            })}
-                        </div>
+                                    )
+                                })}
+                            </div>
 
-                        <div className="btn-box">
-                        {questionList.length !== 1 && <button
-                            className="mr10"
-                            onClick={() => handleRemoveQuestion(i)}>Remove Question</button>}
-                        {questionList.length - 1 === i && <button onClick={handleAddQuestion}>Add Question</button>}
+                            <div className="btn-box mt-2 mb-4">
+                            {questionList.length !== 1 && <button
+                                className="mr-5 btn btn-long-sm"
+                                onClick={() => handleRemoveQuestion(i)}>Remove Question</button>}
+                            {questionList.length - 1 === i && <button className='btn btn-long-sm' onClick={handleAddQuestion}>Add Question</button>}
+                            </div>
                         </div>
-                    </div>
-                )
-            })}
-            <div>
-                <button className="btn col-12 col-md-3" type="submit">Submit</button>
-            </div>
-        </form>
+                    )
+                })}
+                </div>
+                <div className='col-12 mb-4'>
+                    <button className="btn col-12 col-md-3 btn-long" type="submit">Submit</button>
+                </div>
+            </form>
         </div>
     );
 };

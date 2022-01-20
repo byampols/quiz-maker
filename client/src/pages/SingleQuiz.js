@@ -151,12 +151,12 @@ const SingleQuiz = props => {
             return (
               <div key={index} className='card'>
                     <p className='card-header question-header'>{question.questionText}</p>
-                    <div className='card-body flex-row justify-space-between question-body'>
+                    <div className='card-body flex-column justify-space-between question-body'>
                         {question.options.map((option, j) => {
                           return (
-                            <div key={j}>
-                              <label htmlFor={`option.${j}`}>{String.fromCharCode(97 + j)}: {option.optionText}</label>
-                              <input type="checkbox" name={`option.${j}`} ischecked={questions.length ? questions[index][j].isChecked.toString() : "false"} onChange={e => handleAnswerChange(e, index, j, "checkbox")}/> 
+                            <div key={j} className='mb-2 lg-flex'>
+                              <input className='mr-3 check-input' type="checkbox" name={`option.${j}`} ischecked={questions.length ? questions[index][j].isChecked.toString() : "false"} onChange={e => handleAnswerChange(e, index, j, "checkbox")}/> 
+                              <label className='check-label' htmlFor={`option.${j}`}>{String.fromCharCode(97 + j)}: {option.optionText}</label>
                             </div>
                           )
                         })}
@@ -165,7 +165,7 @@ const SingleQuiz = props => {
             );
           })}
 
-          <button className="btn col-12 col-md-3" type="submit">Submit</button>
+          <button className="btn col-12 col-md-3 btn-long" type="submit">Submit</button>
         </form>
         ) : (
           <div className="card-body" key="reactisasillyframework">

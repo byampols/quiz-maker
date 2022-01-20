@@ -39,7 +39,7 @@ export const UPDATE_USER_SCORES = gql`
 `;
 
 export const ADD_QUIZ = gql`
-  mutation addQuiz($description: String!, $questions: [QuestionInput]) {
+  mutation addQuiz($description: String!, $questions: [QuestionInput]!) {
     addQuiz(description: $description, questions: $questions) {
       _id
       description
