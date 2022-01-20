@@ -140,12 +140,22 @@ nav a:hover {
   color: var(--dark);
 }
 
+.card-highlight {
+  border-color: var(--tertiary);
+  background-color: var(--quatrinary);
+}
+
 .card-header {
   color: var(--secondary);
   margin: 0;
   background-color: var(--dark);
   padding: 0.625rem;
   border-radius: calc(0.18rem - 1px) calc(0.18rem - 1px) 0 0;
+}
+
+.card-header-highlight {
+  background-color: var(--tertiary);
+  color: var(--light)
 }
 
 .card-body {

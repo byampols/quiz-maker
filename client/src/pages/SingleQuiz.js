@@ -3,7 +3,7 @@ import {useParams} from 'react-router-dom';
 
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_QUIZ, QUERY_ME_BASIC } from '../utils/queries';
-import { UPDATE_USER_SCORES } from '../utils/mutations';
+import { ADD_UPVOTE, UPDATE_USER_SCORES } from '../utils/mutations';
 import Auth from '../utils/auth';
 
 import { Link } from 'react-router-dom';
@@ -17,7 +17,8 @@ const SingleQuiz = props => {
 
   const { data: userData } = useQuery(QUERY_ME_BASIC);
 
-  const [updateUserScores, { error }] = useMutation(UPDATE_USER_SCORES);
+  const [updateUserScores, { errorScore }] = useMutation(UPDATE_USER_SCORES);
+  const [addUpvote, { errorUpvote }] = useMutation(ADD_UPVOTE);
 
   const quiz = data?.quiz || {};
 
@@ -40,7 +41,9 @@ const SingleQuiz = props => {
       });
 
       const scores = userData ? userData.me.scores.map(score => {
-        return parseFloat(score.score.slice(0, -1)).toFixed(2);
+        if (score.quizId === quizId) {
+          return parseFloat(score.score.slice(0, -1)).toFixed(2);
+        }
       }) : null;
 
       if (scores !== null) {
@@ -100,11 +103,29 @@ const SingleQuiz = props => {
           }
         }
       });
+      
     } catch (e) {
       console.log(e);
     }
-
   };
+
+  const handleUpvote = async (event) => {
+    event.preventDefault();
+
+    try {
+      const hasUpvoted = quiz.upvote.some(upvote => {
+        return upvote.username === userData.me.username;
+      });
+      
+      if (!hasUpvoted) {
+        await addUpvote({
+          variables: {quizId}
+        });
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
   return (
     <div>
@@ -154,7 +175,7 @@ const SingleQuiz = props => {
             <p>
             {parseFloat(score.slice(0, -1)).toFixed(2) > 98 || parseFloat(score.slice(0, -1)).toFixed(2) >= userHighScore ? <>Congratulations!</> : <>Better luck next time!</>}
             </p>
-            {Auth.loggedIn() && <button>Upvote</button>}
+            {Auth.loggedIn() && <button className='btn' onClick={handleUpvote}>Upvote</button>}
           </div>
         )}
       </div>

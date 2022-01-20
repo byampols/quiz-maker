@@ -87,7 +87,7 @@ const resolvers = {
                 const updatedQuiz = await Quiz.findOneAndUpdate(
                     { _id: quizId },
                     { $push: { upvote: { username: context.user.username } } },
-                    { new: true, runValidators: true }
+                    { new: true, runValidators: true, context: 'query' }
                   );
 
                 return updatedQuiz;
