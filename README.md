@@ -22,7 +22,7 @@ A site where tournament organizers can post tournaments and players can find all
 
 ## Usage
 
-![Quiz Whiz](/screenshot.png)
+![Quiz Whiz](/Screenshot.png)
 
 * As a generic (not-logged-in) user, you can view others' profiles and take quizzes, though your results won't be saved
 * Once you log in, your scores will be recorded, and you can create your own quizzes (as well as upvote others' quizzes)!
