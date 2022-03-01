@@ -87,7 +87,7 @@ const Profile = () => {
         </div>
       </div>
 
-      <div className="mb-3">{!userParam && "asdf"}</div>
+      <div className="mb-3">{!userParam && user.username}</div>
     </div>
   );
 };
